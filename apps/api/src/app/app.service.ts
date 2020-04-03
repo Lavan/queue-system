@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Message } from '@queue-system/api-interfaces';
+import { Id } from '@queue-system/api-interfaces';
 
 @Injectable()
 export class AppService {
-  getData(): Message {
+  getData(): Id {
     return { message: 'Welcome to api!' };
   }
 }

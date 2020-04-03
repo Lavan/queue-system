@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
-import { Message } from '@queue-system/api-interfaces';
+import { Id } from '@queue-system/api-interfaces';
 
 import { AppService } from './app.service';
 
