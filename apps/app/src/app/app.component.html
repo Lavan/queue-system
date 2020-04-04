@@ -1,8 +1,9 @@
-<div style="text-align:center">
-  <h1>Welcome to app!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png"
-  />
-</div>
+<mat-toolbar >
+<span></span>
+  <button mat-icon-button [routerLink]="['site']">
+    <mat-icon>store</mat-icon>
+  </button>
+</mat-toolbar>
+<button mat-button color="primary">mat-button</button>
+<button mat-flat-button color="primary">mat-flat-button</button>
 <router-outlet></router-outlet>

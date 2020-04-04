@@ -11,10 +11,17 @@ import { TicketComponent } from './ticket/ticket.component';
 import { RootComponent } from './root/root.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app.routing';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [AppComponent, SiteQueueDetailComponent, SiteDetailComponent, QueueDetailComponent, TicketComponent, RootComponent],
-  imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule, RouterModule.forRoot(appRoutes)],
+  imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule,
+    RouterModule.forRoot(appRoutes),
+    MatToolbarModule, MatIconModule, MatButtonModule,
+    FlexLayoutModule],
   providers: [],
   bootstrap: [AppComponent]
 })
