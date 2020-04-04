@@ -1,10 +1,9 @@
-<h1>{{(siteInfo | async)?.description}}</h1>
+<h1>{{siteInfo?.description}}</h1>
 
-<button mat-flat-button color="primary">Skapa Kö</button>
+<button mat-flat-button color="primary" (click)="createQueue()">Skapa Kö</button>
 
 <h2>Aktiva köer</h2>
-<mat-list>
-  <mat-list-item *ngFor="let queue of queues | async">
-    {{queue.description}}
-  </mat-list-item>
-</mat-list>
+<mat-nav-list>
+  <a *ngFor="let queue of queues" mat-list-item
+     [routerLink]="['/site', siteInfo.id, queue.id]">{{queue.description}}</a>
+</mat-nav-list>

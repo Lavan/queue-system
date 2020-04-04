@@ -95,8 +95,6 @@ const stubData = () => {
 
 const printData = () => {
   console.log(JSON.stringify(sites));
-  console.log(JSON.stringify(queues));
-  console.log(JSON.stringify(tickets));
 };
 
 stubData();
@@ -105,12 +103,18 @@ stubData();
 export class DatabaseService {
   async getSite(siteId: string): Promise<SiteInfo> {
     const s = sites[siteId];
-
-    const queue_ids = [];
-    for (let q of s.queues) {
-      queue_ids.push(q.id);
-    }
+    const queue_ids = s.queues.map(queue => queue.id);
     return { description: s.descr, position: undefined, queues: queue_ids, id: siteId };
+  }
+
+  async getQueues(siteId: string): Promise<QueueInfo[]> {
+    const site = sites[siteId];
+    return site.queues.map<QueueInfo>((queue: Queue) => ({
+      id: queue.id,
+      description: queue.descr,
+      estimatedTime: 0,
+      queueLength: queue.tickets.length
+    }));
   }
 
   async getQueue(queueId: string): Promise<QueueInfo> {
@@ -130,10 +134,9 @@ export class DatabaseService {
     return { description: s.descr, position: site.position, queues: [], id: s.id };
   }
 
-
-  async addQueue(site_id: string, queue_descr: string): Promise<QueueInfo> {
-    const site = sites[site_id];
-    const q = createQueue(site, queue_descr);
+  async addQueue(siteId: string, queueDescription: string): Promise<QueueInfo> {
+    const site = sites[siteId];
+    const q = createQueue(site, queueDescription);
 
     return { id: q.id, description: q.descr, estimatedTime: 0, queueLength: q.tickets.length };
   }

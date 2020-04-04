@@ -39,17 +39,30 @@ export class SiteService {
   getSite(siteId: string): Observable<SiteInfo> {
     return this.http.get<SiteInfo>('/api/site/' + siteId)
       .pipe(
-        tap(current => console.log(current)),
+        tap(current => console.log('getSite', current)),
         tap(current => this.currentSiteSubject.next(current.id)),
         take(1)
       );
   }
 
+  getQueue(siteId: string, queueId: string): Observable<QueueInfo> {
+    return this.http.get<QueueInfo>(`/api/site/${siteId}/${queueId}`)
+      .pipe(
+        tap(current => console.log('getQueue', current)),
+        take(1)
+      );
+  }
+
   getQueues(siteId: string): Observable<QueueInfo[]> {
-    return this.http.get<QueueInfo[]>('/api/site/' + siteId + '/queues');
+    return this.http.get<QueueInfo[]>('/api/site/' + siteId + '/queues')
+      .pipe(
+        tap(current => console.log('getQueues', current)),
+        take(1)
+      );
+
   }
 
   createQueue(siteId: string): Observable<QueueInfo> {
-    return this.http.post<QueueInfo>(`/api/site/${siteId}/new`, {});
+    return this.http.post<QueueInfo>(`/api/site/${siteId}/new`, {description: 'Test'});
   }
 }
