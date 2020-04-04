@@ -11,7 +11,6 @@ export class SiteController {
 
   @Post('register')
   async register(@Body() body: CreateSiteDto): Promise<SiteInfo> {
-    console.log(body);
     return this.databaseService.addSite(body);
   }
 
@@ -32,7 +31,6 @@ export class SiteController {
 
   @Post(':site/new')
   async getNewQueue(@Param() { site }, @Body() body): Promise<QueueInfo> {
-    console.log(site, body);
     return await this.databaseService.addQueue(site, body.description);
   }
 

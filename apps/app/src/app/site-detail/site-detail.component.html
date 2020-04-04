@@ -20,5 +20,5 @@
 <h2>Aktiva köer</h2>
 <mat-nav-list>
   <a *ngFor="let queue of queues" mat-list-item
-     [routerLink]="['/site', siteInfo.id, queue.id]">{{queue.description}}</a>
+     [routerLink]="['/site', siteInfo?.id, queue?.id]">{{queue?.description}}</a>
 </mat-nav-list>

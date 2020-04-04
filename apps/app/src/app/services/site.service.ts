@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CreateSiteDto, QueueInfo, SiteInfo } from '@queue-system/api-interfaces';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -9,30 +9,34 @@ import { catchError, take, tap } from 'rxjs/operators';
 })
 export class SiteService {
   currentSite: string;
-  private currentSiteSubject = new Subject<string>();
-  currentSite$ = this.currentSiteSubject.asObservable();
+  private currentSiteSubject: Subject<string>;
+  currentSite$: Observable<string>;
 
   constructor(private readonly http: HttpClient) {
+    this.currentSite = localStorage.getItem('siteId');
+    if (this.currentSite) {
+      this.currentSiteSubject = new BehaviorSubject(this.currentSite);
+    } else {
+      this.currentSiteSubject = new Subject<string>();
+    }
+    this.currentSite$ = this.currentSiteSubject.asObservable();
+
     this.currentSite$.subscribe(current => {
       this.currentSite = current;
-      if(current) {
+      if (current) {
         localStorage.setItem('siteId', current);
-      }else {
+      } else {
         localStorage.removeItem('siteId');
       }
     });
-    this.currentSite = localStorage.getItem('siteId');
-    if (this.currentSite) {
-      this.currentSiteSubject.next(this.currentSite);
-    }
   }
 
   createSite(param: CreateSiteDto): Observable<SiteInfo> {
     return this.http.post<SiteInfo>('/api/site/register', param)
       .pipe(
-        tap(current => console.log(current)),
         tap(current => this.currentSiteSubject.next(current.id)),
-        take(1)
+        take(1),
+        catchError(err => of(undefined))
       );
   }
 
@@ -45,9 +49,7 @@ export class SiteService {
       .pipe(
         tap(current => this.currentSiteSubject.next(current.id)),
         take(1),
-        catchError(err => {
-          return of(<SiteInfo>{});
-        })
+        catchError(err => of(undefined))
       );
   }
 
@@ -55,9 +57,7 @@ export class SiteService {
     return this.http.get<QueueInfo>(`/api/site/${siteId}/${queueId}`)
       .pipe(
         take(1),
-        catchError(err => {
-          return of(<QueueInfo>{});
-        })
+        catchError(err => of(undefined))
       );
   }
 
@@ -65,9 +65,7 @@ export class SiteService {
     return this.http.get<QueueInfo[]>('/api/site/' + siteId + '/queues')
       .pipe(
         take(1),
-        catchError(err => {
-          return of([]);
-        })
+        catchError(err => of([]))
       );
 
   }
@@ -75,7 +73,6 @@ export class SiteService {
   createQueue(siteId: string, queueDescription: string): Observable<QueueInfo> {
     return this.http.post<QueueInfo>(`/api/site/${siteId}/new`, { description: queueDescription })
       .pipe(
-        tap(current => console.log('createQueue', current)),
         take(1)
       );
 
@@ -84,5 +81,12 @@ export class SiteService {
   logout() {
     this.currentSiteSubject.next();
     localStorage.removeItem('siteId');
+  }
+
+  advanceQueue(siteId: string, queueId: string) {
+    return this.http.post<QueueInfo>(`/api/site/${siteId}/${queueId}/advance`, {})
+      .pipe(
+        take(1)
+      );
   }
 }

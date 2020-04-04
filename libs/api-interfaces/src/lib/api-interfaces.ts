@@ -22,6 +22,7 @@ export class CreateSiteDto {
 export class QueueInfo {
   id: string;
   description: string;
+  currentTicket?: number;
   estimatedTime: number;
   queueLength: number;
 }

@@ -74,7 +74,7 @@ const createTicket = (queue: Queue) => {
 
 const advanceQueue = (queue: Queue) => {
   if (queue.tickets.length === 0) {
-    console.log("Empty queue.");
+    console.log('Empty queue.');
     return;
   }
 
@@ -114,21 +114,21 @@ const stubData = () => {
     createTicket(q);
   }
 
-/*  setTimeout(() => {
-    advanceQueue(q);
-  }, 1500);
+  /*  setTimeout(() => {
+      advanceQueue(q);
+    }, 1500);
 
-  setTimeout(() => {
-    advanceQueue(q);
-  }, 1000);
+    setTimeout(() => {
+      advanceQueue(q);
+    }, 1000);
 
-  setTimeout(() => {
-    advanceQueue(q);
-  }, 2000);
+    setTimeout(() => {
+      advanceQueue(q);
+    }, 2000);
 
-  setTimeout(() => {
-    advanceQueue(q);
-  }, 1750);*/
+    setTimeout(() => {
+      advanceQueue(q);
+    }, 1750);*/
 
   printData();
 };
@@ -179,8 +179,17 @@ export class DatabaseService {
    * @param queueId
    */
   async getQueue(queueId: string): Promise<QueueInfo> {
-    const queue:Queue = queues[queueId];
-    return { description: queue.descr, estimatedTime: getEstimatedQueueTime(queue.tickets.length, queue.advance_deltas), id: queueId, queueLength: queue.tickets.length };
+    const queue: Queue = queues[queueId];
+    if (!queue) {
+      throw new NotFoundException();
+    }
+    return {
+      description: queue.descr,
+      estimatedTime: getEstimatedQueueTime(queue.tickets.length, queue.advance_deltas),
+      id: queueId,
+      queueLength: queue.tickets.length,
+      currentTicket: queue.current_nr
+    };
   }
 
   /**
@@ -189,23 +198,41 @@ export class DatabaseService {
    * @param queueId
    */
   async advanceQueue(queueId: string): Promise<QueueInfo> {
-    const queue:Queue = queues[queueId];
+    const queue: Queue = queues[queueId];
+    if (!queue) {
+      throw new NotFoundException();
+    }
     advanceQueue(queue);
 
-    return { description: queue.descr, estimatedTime: getEstimatedQueueTime(queue.tickets.length, queue.advance_deltas), id: queueId, queueLength: queue.tickets.length };
+    return {
+      description: queue.descr,
+      estimatedTime: getEstimatedQueueTime(queue.tickets.length, queue.advance_deltas),
+      id: queueId,
+      queueLength: queue.tickets.length,
+      currentTicket: queue.current_nr
+    };
   }
+
   /**
    * Get a new ticket for specified queue
    *
    * @param queueId
    */
   async getTicket(queueId: string): Promise<TicketInfo> {
-    const queue:Queue  = queues[queueId];
+    const queue: Queue = queues[queueId];
+    if (!queue) {
+      throw new NotFoundException();
+    }
     const ticket = createTicket(queue);
 
     const num_ahead = queue.tickets.length - 1;
 
-    return { description: queue.descr, estimatedTime: getEstimatedQueueTime(num_ahead, queue.advance_deltas), id: ticket.id, ticketNumber: ticket.nr };
+    return {
+      description: queue.descr,
+      estimatedTime: getEstimatedQueueTime(num_ahead, queue.advance_deltas),
+      id: ticket.id,
+      ticketNumber: ticket.nr
+    };
   }
 
   /**
@@ -215,12 +242,23 @@ export class DatabaseService {
    * @param ticketId
    */
   async getTicketStatus(queueId: string, ticketId: string): Promise<TicketInfo> {
-    const ticket:Ticket = tickets[ticketId];
-    const queue:Queue = queues[queueId];
+    const ticket: Ticket = tickets[ticketId];
+    if (!ticket) {
+      throw new NotFoundException();
+    }
+    const queue: Queue = queues[queueId];
+    if (!queue) {
+      throw new NotFoundException();
+    }
 
     const num_ahead = ticket.nr - queue.current_nr;
 
-    return { description: queue.descr, estimatedTime: getEstimatedQueueTime(num_ahead, queue.advance_deltas), id: ticketId, ticketNumber: ticket.nr };
+    return {
+      description: queue.descr,
+      estimatedTime: getEstimatedQueueTime(num_ahead, queue.advance_deltas),
+      id: ticketId,
+      ticketNumber: ticket.nr
+    };
   }
 
   /**

@@ -22,13 +22,16 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiteService } from './services/site.service';
 import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
-  declarations: [AppComponent, SiteQueueDetailComponent, SiteDetailComponent, QueueDetailComponent, EnterComponent, TicketComponent, RootComponent, SiteComponent],
+  declarations: [AppComponent, SiteQueueDetailComponent, SiteDetailComponent,
+    QueueDetailComponent, EnterComponent, TicketComponent, RootComponent, SiteComponent
+  ],
   imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule,
-    FlexLayoutModule, MatInputModule, FormsModule, ReactiveFormsModule, MatListModule],
+    FlexLayoutModule, MatInputModule, FormsModule, ReactiveFormsModule, MatListModule, MatGridListModule],
   providers: [SiteService],
   bootstrap: [AppComponent]
 })
