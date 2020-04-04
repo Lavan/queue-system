@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSiteDto, QueueInfo, SiteInfo, TicketInfo } from '@queue-system/api-interfaces';
 import { generateRandomString } from '../utilities';
 
@@ -102,13 +102,19 @@ stubData();
 @Injectable()
 export class DatabaseService {
   async getSite(siteId: string): Promise<SiteInfo> {
-    const s = sites[siteId];
-    const queue_ids = s.queues.map(queue => queue.id);
-    return { description: s.descr, position: undefined, queues: queue_ids, id: siteId };
+    const site = sites[siteId];
+    if (!site) {
+      throw new NotFoundException();
+    }
+    const queue_ids = site.queues.map(queue => queue.id);
+    return { description: site.descr, position: undefined, queues: queue_ids, id: siteId };
   }
 
   async getQueues(siteId: string): Promise<QueueInfo[]> {
     const site = sites[siteId];
+    if (!site) {
+      throw new NotFoundException();
+    }
     return site.queues.map<QueueInfo>((queue: Queue) => ({
       id: queue.id,
       description: queue.descr,

@@ -9,9 +9,9 @@ import { SiteComponent } from './site/site.component';
 
 export const appRoutes: Routes = [
   { path: ':queueId/enter', component: EnterComponent },
-  { path: 'site/:siteId/:queueId', component: SiteQueueDetailComponent },
-  { path: 'site/:siteId', component: SiteDetailComponent },
   { path: 'site', component: SiteComponent },
+  { path: 'site/:siteId', component: SiteDetailComponent },
+  { path: 'site/:siteId/:queueId', component: SiteQueueDetailComponent },
   { path: 'queue/:queueId', component: QueueDetailComponent },
   { path: ':queueId/:ticketId', component: TicketComponent },
   { path: '', component: RootComponent },

@@ -1,7 +1,22 @@
-<h1>{{siteInfo?.description}}</h1>
+<mat-toolbar fxLayout="row">
+  <h1>{{siteInfo?.description}}</h1>
+  <span class="fill-remaining"></span>
+  <button mat-icon-button (click)="exitSite()">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>
 
-<button mat-flat-button color="primary" (click)="createQueue()">Skapa Kö</button>
-
+<div fxLayout="column">
+  <mat-form-field appearance="fill">
+    <mat-label>Beskrivning av kö</mat-label>
+    <input matInput #description type="text" [(ngModel)]="queueDescription">
+  </mat-form-field>
+  <button mat-flat-button color="primary"
+          [disabled]="!description.value"
+          (click)="createQueue()">
+    Skapa Kö
+  </button>
+</div>
 <h2>Aktiva köer</h2>
 <mat-nav-list>
   <a *ngFor="let queue of queues" mat-list-item

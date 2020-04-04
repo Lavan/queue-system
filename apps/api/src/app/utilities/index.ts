@@ -1,7 +1,7 @@
 import * as crypto from 'crypto';
 
 export function generateRandomString(length: number = 24) {
-  return crypto.randomBytes((length + 3) / 4 * 3).toString('base64');
+  return crypto.randomBytes(Math.floor((length + 3) / 4) * 3).toString('base64');
 }
 
 /**
@@ -46,7 +46,7 @@ export const getEstimatedQueueTime = (n: number, history: number[], num_samples:
   const weight_sum = weights.reduce((a, b) => a + b, 0);
   const q_weight = (1.0 - weight_sum) / q_len;
 
-  const q_weights:number[] = new Array(q_len);
+  const q_weights: number[] = new Array(q_len);
   for (let i = 0; i < q_weights.length; i++) {
     q_weights[i] = q_weight;
   }

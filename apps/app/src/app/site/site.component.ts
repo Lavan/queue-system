@@ -13,7 +13,7 @@ export class SiteComponent implements OnInit {
 
   constructor(private readonly router: Router, private readonly siteService: SiteService) {
     if (this.siteService.currentSite) {
-      this.router.navigate(['/site', this.siteService.currentSite]);
+      this.goToSite(this.siteService.currentSite);
     }
   }
 
@@ -25,7 +25,7 @@ export class SiteComponent implements OnInit {
     this.goToSite(site.id);
   }
 
-  async goToSite(siteId: string) {
+  goToSite(siteId: string) {
     this.router.navigate(['/site', siteId]);
   }
 }

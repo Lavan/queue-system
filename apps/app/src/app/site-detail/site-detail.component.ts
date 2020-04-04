@@ -1,22 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SiteService } from '../services/site.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QueueInfo, SiteInfo } from '@queue-system/api-interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'queue-system-site-detail',
   templateUrl: './site-detail.component.html',
   styleUrls: ['./site-detail.component.css']
 })
-export class SiteDetailComponent implements OnInit {
+export class SiteDetailComponent implements OnInit, OnDestroy {
   queues: QueueInfo[] = [];
   siteInfo: SiteInfo;
+  queueDescription: string;
+  private paramSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private readonly siteService: SiteService) {
-    route.paramMap.subscribe(params => {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private readonly siteService: SiteService) {
+    this.paramSubscription = route.paramMap.subscribe(params => {
       const siteId = params.get('siteId');
       this.updateSite(siteId);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.paramSubscription.unsubscribe();
   }
 
   private updateSite(siteId: string) {
@@ -28,7 +37,15 @@ export class SiteDetailComponent implements OnInit {
   }
 
   createQueue() {
-    this.siteService.createQueue(this.siteInfo.id);
-    this.updateSite(this.siteInfo.id);
+    this.siteService.createQueue(this.siteInfo.id, this.queueDescription)
+      .subscribe(queueInfo => {
+        this.queueDescription = '';
+        this.updateSite(this.siteInfo.id);
+      });
+  }
+
+  exitSite() {
+    this.siteService.logout();
+    this.router.navigate(['/site']);
   }
 }
