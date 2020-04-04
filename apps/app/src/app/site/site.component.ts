@@ -21,7 +21,7 @@ export class SiteComponent implements OnInit {
   }
 
   async create() {
-    const site = await this.siteService.createSite({ description: this.description });
+    const site = await this.siteService.createSite({ description: this.description }).toPromise();
     this.goToSite(site.id);
   }
 

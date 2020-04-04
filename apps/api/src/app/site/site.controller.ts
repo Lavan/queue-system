@@ -16,7 +16,7 @@ export class SiteController {
   }
 
   @Post(':site/update')
-  async update(@Body() body): Promise<SiteInfo> {
+  async update(@Param() { site }, @Body() body): Promise<SiteInfo> {
     return this.databaseService.updateSite(body);
   }
 
@@ -35,7 +35,7 @@ export class SiteController {
     return queues;
   }
 
-  @Get(':site/newqueue')
+  @Post(':site/new')
   async getNewQueue(@Param() { site }): Promise<QueueInfo> {
     return { description: '', id: generateRandomString(), estimatedTime: 0, queueLength: 0 };
   }

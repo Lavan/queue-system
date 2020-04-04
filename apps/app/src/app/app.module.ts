@@ -20,13 +20,14 @@ import { SiteComponent } from './site/site.component';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiteService } from './services/site.service';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [AppComponent, SiteQueueDetailComponent, SiteDetailComponent, QueueDetailComponent, EnterComponent, TicketComponent, RootComponent, SiteComponent],
   imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     MatToolbarModule, MatIconModule, MatButtonModule,
-    FlexLayoutModule, MatInputModule, FormsModule, ReactiveFormsModule],
+    FlexLayoutModule, MatInputModule, FormsModule, ReactiveFormsModule, MatListModule],
   providers: [SiteService],
   bootstrap: [AppComponent]
 })

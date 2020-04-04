@@ -1,1 +1,10 @@
-<p>site-detail works!</p>
+<h1>{{(siteInfo | async)?.description}}</h1>
+
+<button mat-flat-button color="primary">Skapa Kö</button>
+
+<h2>Aktiva köer</h2>
+<mat-list>
+  <mat-list-item *ngFor="let queue of queues | async">
+    {{queue.description}}
+  </mat-list-item>
+</mat-list>

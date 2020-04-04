@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'enter',
+  selector: 'queue-system-enter',
   templateUrl: './enter.component.html',
   styleUrls: ['./enter.component.scss']
 })
