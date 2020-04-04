@@ -8,8 +8,8 @@ import { RootComponent } from './root/root.component';
 export const appRoutes: Routes = [
   { path: 'site/:siteId/:queueId', component: SiteQueueDetailComponent },
   { path: 'site/:siteId', component: SiteDetailComponent },
-  { path: ':queueId', component: QueueDetailComponent },
-  { path: ':queueId/:ticketId', component: TicketComponent },
-  { path: '', component: RootComponent, pathMatch: 'full' },
+  { path: 'queue/:queueId', component: QueueDetailComponent },
+  { path: 'queue/:queueId/:ticketId', component: TicketComponent },
+  { path: '', component: RootComponent },
   { path: '**', redirectTo: '' }
 ];
