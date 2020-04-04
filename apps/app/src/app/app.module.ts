@@ -15,6 +15,7 @@ import { appRoutes } from './app.routing';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SiteComponent } from './site/site.component';
 import { MatInputModule } from '@angular/material/input';
@@ -26,7 +27,7 @@ import { MatListModule } from '@angular/material/list';
   declarations: [AppComponent, SiteQueueDetailComponent, SiteDetailComponent, QueueDetailComponent, EnterComponent, TicketComponent, RootComponent, SiteComponent],
   imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
-    MatToolbarModule, MatIconModule, MatButtonModule,
+    MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule,
     FlexLayoutModule, MatInputModule, FormsModule, ReactiveFormsModule, MatListModule],
   providers: [SiteService],
   bootstrap: [AppComponent]

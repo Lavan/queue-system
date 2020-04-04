@@ -13,7 +13,7 @@ export const appRoutes: Routes = [
   { path: 'site/:siteId', component: SiteDetailComponent },
   { path: 'site', component: SiteComponent },
   { path: 'queue/:queueId', component: QueueDetailComponent },
-  { path: 'queue/:queueId/:ticketId', component: TicketComponent },
+  { path: ':queueId/:ticketId', component: TicketComponent },
   { path: '', component: RootComponent },
   { path: '**', redirectTo: '' }
 ];
