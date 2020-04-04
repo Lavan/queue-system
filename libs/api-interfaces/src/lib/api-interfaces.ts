@@ -9,15 +9,21 @@ export class Position {
 
 export class SiteInfo {
   id: string;
-  name: string;
+  description: string;
   position: Position;
+  queues: string[];
 }
 
 export class QueueInfo {
   id: string;
-
+  description: string;
+  estimatedTime: number;
+  queueLength: number;
 }
 
 export class TicketInfo {
   id: string;
+  description: string;
+  estimatedTime: number;
+  ticketNumber: number;
 }

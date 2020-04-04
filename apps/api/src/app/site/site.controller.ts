@@ -26,11 +26,11 @@ export class SiteController {
 
   @Get(':site/newqueue')
   getNewQueue(@Param() { site }): QueueInfo {
-    return { id: generateRandomString() };
+    return { id: generateRandomString(), estimatedTime: 0, queueLength: 0 };
   }
 
   @Get(':site/:queue')
   getQueueInfo(@Param() { site, queue }): QueueInfo {
-    return;
+    return { id: queue, estimatedTime: 0, queueLength: 0 };
   }
 }
