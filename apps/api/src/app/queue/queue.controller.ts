@@ -1,20 +1,24 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { Id, QueueInfo, TicketInfo } from '@queue-system/api-interfaces';
+import { DatabaseService } from '../database/database.service';
 
 @Controller('queue')
 export class QueueController {
+  constructor(private readonly databaseService:DatabaseService) {
+  }
+
   @Get(':queue')
-  getQueue(@Param() { queue }): QueueInfo {
-    return;
+  async getQueue(@Param() { queue }): Promise<QueueInfo> {
+    return this.databaseService.getQueue(queue);
   }
 
   @Get(':queue/enter')
-  getTicket(@Param() { queue }): Id {
-    return;
+  async getTicket(@Param() { queue }): Promise<TicketInfo> {
+    return this.databaseService.getTicket(queue);
   }
 
   @Get(':queue/:ticket')
-  getTicketStatus(@Param() { queue, ticket }): TicketInfo {
-    return;
+  async getTicketStatus(@Param() { queue, ticket }): Promise<TicketInfo> {
+    return this.databaseService.getTicketStatus(queue, ticket);
   }
 }
