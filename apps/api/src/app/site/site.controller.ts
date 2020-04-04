@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { QueueInfo, SiteInfo } from '@queue-system/api-interfaces';
+import { CreateSiteDto, QueueInfo, SiteInfo } from '@queue-system/api-interfaces';
 import { generateRandomString } from '../utilities';
 import { DatabaseService } from '../database/database.service';
 
@@ -10,7 +10,8 @@ export class SiteController {
   }
 
   @Post('register')
-  async register(@Body() body): Promise<SiteInfo> {
+  async register(@Body() body: CreateSiteDto): Promise<SiteInfo> {
+    console.log(body);
     return this.databaseService.addSite(body);
   }
 
