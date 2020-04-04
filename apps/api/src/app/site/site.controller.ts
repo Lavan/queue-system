@@ -1,36 +1,46 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Id, QueueInfo, SiteInfo } from '@queue-system/api-interfaces';
+import { QueueInfo, SiteInfo } from '@queue-system/api-interfaces';
 import { generateRandomString } from '../utilities';
+import { DatabaseService } from '../database/database.service';
 
 @Controller('site')
 export class SiteController {
+
+  constructor(private readonly databaseService: DatabaseService) {
+  }
+
   @Post('register')
-  register(@Body() body): Id {
-    return { id: generateRandomString() };
+  async register(@Body() body): Promise<SiteInfo> {
+    return this.databaseService.addSite(body);
   }
 
   @Post(':site/update')
-  update(@Body() body): Id {
-    return { id: generateRandomString() };
+  async update(@Body() body): Promise<SiteInfo> {
+    return this.databaseService.updateSite(body);
   }
 
   @Get(':site')
-  getSite(@Param() { site }): SiteInfo {
-    return;
+  async getSite(@Param() { site }): Promise<SiteInfo> {
+    return this.databaseService.getSite(site);
   }
 
   @Get(':site/queues')
-  getQueues(@Param() { site }): QueueInfo[] {
-    return;
+  async getQueues(@Param() { site }): Promise<QueueInfo[]> {
+    const siteInfo = await this.databaseService.getSite(site);
+    const queues = [];
+    for (let queue of siteInfo.queues) {
+      queues.push(await this.databaseService.getQueue(queue));
+    }
+    return queues;
   }
 
   @Get(':site/newqueue')
-  getNewQueue(@Param() { site }): QueueInfo {
-    return { id: generateRandomString(), estimatedTime: 0, queueLength: 0 };
+  async getNewQueue(@Param() { site }): Promise<QueueInfo> {
+    return { description: '', id: generateRandomString(), estimatedTime: 0, queueLength: 0 };
   }
 
   @Get(':site/:queue')
   getQueueInfo(@Param() { site, queue }): QueueInfo {
-    return { id: queue, estimatedTime: 0, queueLength: 0 };
+    return { description: '', id: queue, estimatedTime: 0, queueLength: 0 };
   }
 }
