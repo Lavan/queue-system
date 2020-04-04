@@ -10,7 +10,7 @@ export function generateRandomString(length: number = 24) {
  * @param arrValues
  * @param arrWeights
  */
-export const weightedMean = (arrValues: number[], arrWeights: number[]) => {
+const weightedMean = (arrValues: number[], arrWeights: number[]) => {
   const result = arrValues
     .map((value, i) => {
       const weight = arrWeights[i];
@@ -29,7 +29,11 @@ export const weightedMean = (arrValues: number[], arrWeights: number[]) => {
  * @param history History of time between admissions, newest first
  * @param num_samples Number of samples to use in calculation, must be >= 3
  */
-export const getEstimatedQueueTime = (n: number, history: number[], num_samples: number) => {
+export const getEstimatedQueueTime = (n: number, history: number[], num_samples: number=10) => {
+
+  if (history.length === 0) {
+    return 0;
+  }
 
   // If not enough history we use arithmetic mean
   if (history.length < num_samples) {
