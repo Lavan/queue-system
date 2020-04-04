@@ -29,7 +29,7 @@ const weightedMean = (arrValues: number[], arrWeights: number[]) => {
  * @param history History of time between admissions, newest first
  * @param num_samples Number of samples to use in calculation, must be >= 3
  */
-export const getEstimatedQueueTime = (n: number, history: number[], num_samples: number=10) => {
+export const getEstimatedQueueTime = (n: number, history: number[], num_samples: number=5) => {
 
   if (history.length === 0) {
     return 0;
@@ -42,7 +42,10 @@ export const getEstimatedQueueTime = (n: number, history: number[], num_samples:
     return sum / history.length;
   }
 
-  const samples = history.slice(0, num_samples);
+  const rev_history = history.slice().reverse();
+  console.log(rev_history);
+
+  const samples = rev_history.slice(0, num_samples);
   let weights = [0.5, 0.3];
 
   const q_len = samples.length - weights.length;
@@ -57,6 +60,7 @@ export const getEstimatedQueueTime = (n: number, history: number[], num_samples:
 
   // weights now complete and normalized (summing to 1)
   weights = weights.concat(q_weights);
+  console.log(weights);
 
   // now we have samples with matching weights, calculate weighted average
   const mean = weightedMean(samples, weights);

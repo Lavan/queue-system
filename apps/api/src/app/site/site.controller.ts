@@ -40,4 +40,9 @@ export class SiteController {
   async getQueueInfo(@Param() { site, queue }): Promise<QueueInfo> {
     return await this.databaseService.getQueue(queue);
   }
+
+  @Post(':site/:queue/advance')
+  async advanceQueue(@Param() { site, queue }, @Body() body): Promise<QueueInfo> {
+    return await this.databaseService.advanceQueue(queue);
+  }
 }

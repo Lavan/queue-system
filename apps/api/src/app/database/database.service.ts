@@ -163,7 +163,7 @@ export class DatabaseService {
     return site.queues.map<QueueInfo>((queue: Queue) => ({
       id: queue.id,
       description: queue.descr,
-      estimatedTime: getEstimatedQueueTime(queue.tickets.length, queue.advance_deltas.reverse()),
+      estimatedTime: getEstimatedQueueTime(queue.tickets.length, queue.advance_deltas),
       queueLength: queue.tickets.length
     }));
   }
@@ -175,9 +175,20 @@ export class DatabaseService {
    */
   async getQueue(queueId: string): Promise<QueueInfo> {
     const queue:Queue = queues[queueId];
-    return { description: queue.descr, estimatedTime:  getEstimatedQueueTime(queue.tickets.length, queue.advance_deltas.reverse()), id: queueId, queueLength: queue.tickets.length };
+    return { description: queue.descr, estimatedTime: getEstimatedQueueTime(queue.tickets.length, queue.advance_deltas), id: queueId, queueLength: queue.tickets.length };
   }
 
+  /**
+   * Get a queue.
+   *
+   * @param queueId
+   */
+  async advanceQueue(queueId: string): Promise<QueueInfo> {
+    const queue:Queue = queues[queueId];
+    advanceQueue(queue);
+
+    return { description: queue.descr, estimatedTime: getEstimatedQueueTime(queue.tickets.length, queue.advance_deltas), id: queueId, queueLength: queue.tickets.length };
+  }
   /**
    * Get a new ticket for specified queue
    *
@@ -189,7 +200,7 @@ export class DatabaseService {
 
     const num_ahead = queue.tickets.length - 1;
 
-    return { description: queue.descr, estimatedTime: getEstimatedQueueTime(num_ahead, queue.advance_deltas.reverse()), id: ticket.id, ticketNumber: ticket.nr };
+    return { description: queue.descr, estimatedTime: getEstimatedQueueTime(num_ahead, queue.advance_deltas), id: ticket.id, ticketNumber: ticket.nr };
   }
 
   /**
@@ -204,7 +215,7 @@ export class DatabaseService {
 
     const num_ahead = ticket.nr - queue.current_nr;
 
-    return { description: queue.descr, estimatedTime: getEstimatedQueueTime(num_ahead, queue.advance_deltas.reverse()), id: ticketId, ticketNumber: ticket.nr };
+    return { description: queue.descr, estimatedTime: getEstimatedQueueTime(num_ahead, queue.advance_deltas), id: ticketId, ticketNumber: ticket.nr };
   }
 
   /**
