@@ -14,6 +14,11 @@ export class SiteInfo {
   queues: string[];
 }
 
+export class CreateSiteDto {
+  description: string;
+  position?: Position;
+}
+
 export class QueueInfo {
   id: string;
   description: string;
