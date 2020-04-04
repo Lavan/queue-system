@@ -73,6 +73,11 @@ const createTicket = (queue: Queue) => {
 };
 
 const advanceQueue = (queue: Queue) => {
+  if (queue.tickets.length === 0) {
+    console.log("Empty queue.");
+    return;
+  }
+
   // remove from queue
   const removed_ticket = queue.tickets.shift();
   console.log('removed : ' + removed_ticket.id);
