@@ -27,11 +27,16 @@ const sites = new Map();
 const queues = new Map();
 const tickets = new Map();
 
-export const createSite = (descr: string) => {
+const createSite = (descr: string, force_id: string="") => {
 
   const site = {} as Site;
 
-  site.id = generateRandomString();
+  if (force_id === "") {
+    site.id = generateRandomString();
+  }
+  else {
+    site.id = force_id;
+  }
   site.descr = descr;
   site.queues = new Array();
 
@@ -39,11 +44,16 @@ export const createSite = (descr: string) => {
   return site;
 };
 
-export const createQueue = (site: Site, descr: string) => {
+const createQueue = (site: Site, descr: string, force_id: string="") => {
 
   const queue = {} as Queue;
 
-  queue.id = generateRandomString();
+  if (force_id === "") {
+    queue.id = generateRandomString();
+  }
+  else {
+    queue.id = force_id;
+  }
   queue.site_id = site.id;
   queue.descr = descr;
   queue.current_nr = 0;
@@ -56,7 +66,7 @@ export const createQueue = (site: Site, descr: string) => {
   return queue;
 };
 
-export const createTicket = (queue: Queue) => {
+const createTicket = (queue: Queue) => {
 
   const ticket = {} as Ticket;
 
@@ -70,7 +80,7 @@ export const createTicket = (queue: Queue) => {
   return ticket;
 };
 
-export const advanceQueue = (queue: Queue) => {
+const advanceQueue = (queue: Queue) => {
   // remove from queue
   const removed_ticket = queue.tickets.shift();
   console.log("removed : " + removed_ticket.id);
@@ -85,8 +95,8 @@ export const advanceQueue = (queue: Queue) => {
 
 const stubData = () => {
   console.log("Stubbing data!")
-  const s = createSite("Systembolaget");
-  const q = createQueue(s, "Insläpp");
+  const s = createSite("Systembolaget", "site_1");
+  const q = createQueue(s, "Insläpp", "queue_1");
 
   for (let i = 0; i < 30; i++) {
     createTicket(q);
@@ -113,7 +123,14 @@ stubData();
 @Injectable()
 export class DatabaseService {
   async getSite(siteId: string): Promise<SiteInfo> {
-    return { description: '', position: undefined, queues: [], id: siteId };
+    const s = sites.get(siteId);
+
+    const queue_ids = [];
+    for (let q of s.queues) {
+      queue_ids.push(q.id);
+    }
+    return { description: s.descr, position: undefined, queues: queue_ids, id: siteId };
+    // return { description: '', position: undefined, queues: [], id: siteId };
   }
 
   async getQueue(queueId: string): Promise<QueueInfo> {
@@ -129,7 +146,15 @@ export class DatabaseService {
   }
 
   async addSite(site: CreateSiteDto): Promise<SiteInfo> {
-    return { description: site.description, position: site.position, queues: [], id: generateRandomString() };
+    const s = createSite(site.description);
+    return { description: s.descr, position: site.position, queues: [], id: s.id };
+  }
+
+  async addQueue(site_id: string, queue_descr: string): Promise<QueueInfo> {
+    const site = sites.get(site_id);
+    const q = createQueue(site, queue_descr);
+
+    return { id: q.id, description: q.descr, estimatedTime: 0, queueLength: q.tickets.length };
   }
 
   async updateSite(site: SiteInfo): Promise<SiteInfo> {
