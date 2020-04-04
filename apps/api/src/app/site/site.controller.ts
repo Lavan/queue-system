@@ -37,7 +37,7 @@ export class SiteController {
   }
 
   @Get(':site/:queue')
-  getQueueInfo(@Param() { site, queue }): QueueInfo {
-    return { description: '', id: queue, estimatedTime: 0, queueLength: 0 };
+  async getQueueInfo(@Param() { site, queue }): Promise<QueueInfo> {
+    return await this.databaseService.getQueue(queue);
   }
 }
