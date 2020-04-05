@@ -29,7 +29,7 @@ To slow the spread of the SARS-CoV-2 virus physical distancing rules are now sug
 # Solution description
 We propose a fully digital solution which is not dependant on complex registration processes, exotic hardware or the sharing of personal data. It aims to replace the "old" way of getting a paper ticket and collectively waiting in the vincinity where the current/next ticket being processed are called out. 
 
-A store representative:
+***A store representative:***
 1. Registers the site/facility by supplying:
     - A description, for example, "Systembolaget"
 2. Gets automatically assigned a unique site-identifier in the form of a QR-code.
@@ -44,7 +44,7 @@ A store representative:
     - The current ticket number being handled.
     - Function to advance the queue.
 
-A customer arrives at a site for which he/she want to be admitted:
+***A customer arrives at a site for which he/she want to be admitted:***
 1. Uses their phone to scan the QR code which the site representatives have made available in some way.
 2. Enters the queue and gets assigned a virtual ticket.
 3. The virtual ticket displays estimated time left before admission, and the customer can in this way choose to wait somewhere else in order to minimize contact with others.
@@ -99,7 +99,11 @@ https://www.linkedin.com/in/perbernhardsson/
 
 https://www.linkedin.com/in/mattiasflodin/
 
+Describe roles and skills.
+
 # Team contact info
+Need fullname, email, phone.  
+
 Per Bernhardson  
 Fredrik Mäkeläinen  
 Mattias Flodin  
