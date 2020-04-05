@@ -92,9 +92,12 @@ Developed as a web applikation using modern technologies:
 https://github.com/Lavan/queue-system
 
 # Team description
-Linkedin?  
+Linkedins?  
 https://www.linkedin.com/in/fredrik-m%C3%A4kel%C3%A4inen-b66799157/
 
+https://www.linkedin.com/in/perbernhardsson/
+
+https://www.linkedin.com/in/mattiasflodin/
 
 # Team contact info
 Per Bernhardson  
