@@ -24,7 +24,7 @@ export class QueueController {
   }
 
   @Delete(':queue/:ticket')
-  async deleteTicketStatus(@Param() { queue, ticket }) {
+  async removeTicket(@Param() { queue, ticket }) {
     return this.databaseService.removeTicket(queue, ticket);
   }
 }

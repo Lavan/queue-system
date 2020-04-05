@@ -1,1 +1,14 @@
-Välkommen
+<div fxLayout="column" fxFlexAlign="start center">
+  <h2 fxFlex="nogrow">
+    Välkommen till kösystemet
+  </h2>
+
+  <p fxFlex="nogrow">
+    Läs in den QR-kod som visas vid den butik to vill besöka.
+  </p>
+
+  <button fxFlex="nogrow" *ngIf="!scan" mat-raised-button (click)="scan = true">Läs QR</button>
+  <div fxFlex="60" *ngIf="scan">
+    <zxing-scanner [formats]="allowedFormats" (scanSuccess)="scanSuccess($event)"></zxing-scanner>
+  </div>
+</div>

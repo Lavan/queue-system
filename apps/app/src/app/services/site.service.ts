@@ -92,7 +92,7 @@ export class SiteService {
     localStorage.removeItem('siteId');
   }
 
-  advanceQueue(siteId: string, queueId: string) {
+  advanceQueue(siteId: string, queueId: string): Observable<QueueInfo> {
     return this.http.post<QueueInfo>(`/api/site/${siteId}/${queueId}/advance`, {})
       .pipe(
         take(1),
@@ -100,8 +100,21 @@ export class SiteService {
       );
   }
 
-  enterQueue(queueId: string) {
+  enterQueue(queueId: string): Observable<TicketInfo> {
     return this.http.post<TicketInfo>(`/api/queue/${queueId}/enter`, {})
+      .pipe(
+        take(1),
+        catchError(err => of(undefined))
+      );
+  }
+
+  leaveQueue(queueId, ticketId): Observable<any> {
+    return this.http.delete(`/api/queue/${queueId}/${ticketId}`)
+      .pipe(take(1));
+  }
+
+  getTicketStatus(queueId, ticketId) :Observable<TicketInfo> {
+    return this.http.get<TicketInfo>(`/api/queue/${queueId}/${ticketId}`, {})
       .pipe(
         take(1),
         catchError(err => of(undefined))

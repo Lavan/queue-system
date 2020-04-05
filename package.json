@@ -47,6 +47,7 @@
     "@nrwl/angular": "9.2.2",
     "@zxing/ngx-scanner": "^3.0.0",
     "core-js": "^3.6.4",
+    "ngx-kjua": "^1.7.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.5",
     "zone.js": "^0.10.3"

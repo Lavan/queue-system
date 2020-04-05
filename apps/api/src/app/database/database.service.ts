@@ -47,8 +47,8 @@ const createQueue = (site: Site, descr: string, force_id?: string) => {
     id: force_id ?? generateRandomString(),
     site_id: site.id,
     descr: descr,
-    current_nr: 0,
-    next_nr: 0,
+    current_nr: 200,
+    next_nr: 200,
     tickets: [],
     advance_deltas: []
   };
@@ -245,20 +245,19 @@ export class DatabaseService {
   async getTicketStatus(queueId: string, ticketId: string): Promise<TicketInfo> {
     const ticket: Ticket = tickets[ticketId];
     if (!ticket) {
-      throw new NotFoundException();
+      throw new NotFoundException('Ticket not found');
     }
     const queue: Queue = queues[queueId];
     if (!queue) {
-      throw new NotFoundException();
+      throw new NotFoundException('Queue not found');
     }
-
     const num_ahead = ticket.nr - queue.current_nr;
 
     return {
       description: queue.descr,
       estimatedTime: getEstimatedQueueTime(num_ahead, queue.advance_deltas),
       id: ticketId,
-      ticketNumber: ticket.nr
+      ticketNumber: ticket.nr + 1
     };
   }
 
@@ -276,7 +275,6 @@ export class DatabaseService {
     const ticketIndex = queue.tickets.findIndex(ticket => ticket.id === ticketId);
     if (ticketIndex >= 0) {
       queue.tickets.splice(ticketIndex, 1);
-      console.log('removed : ' + ticketId);
       delete tickets[ticketId];
     }
   }

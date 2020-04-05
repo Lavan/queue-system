@@ -7,12 +7,18 @@ img.logo {
     font-size: 32px;
 }
 .queue-position {
-    font-size: 192px;
-    line-height: 192px;
+    font-size: 128px;
+    line-height: 128px;
     display: inline-block;
     padding: 16px;
 }
 
 .mat-card {
     width: fit-content;
+}
+
+.center, .mat-card-header-text {
+  width: fit-content;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }

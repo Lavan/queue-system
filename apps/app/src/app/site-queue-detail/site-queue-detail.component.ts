@@ -18,9 +18,11 @@ export class SiteQueueDetailComponent implements OnInit, OnDestroy {
   estimatedTime: string;
   queueLength: number;
   private updateIntervalHandle: number;
+  queueUrl: string;
 
   constructor(private readonly route: ActivatedRoute,
               private readonly siteService: SiteService) {
+
     route.paramMap.subscribe(params => {
       const siteId = params.get('siteId');
       const queueId = params.get('queueId');
@@ -60,6 +62,7 @@ export class SiteQueueDetailComponent implements OnInit, OnDestroy {
       return;
     }
     this.queueId = queue.id;
+    this.queueUrl = `${location.origin}/queue/${this.queueId}`;
     this.queueDescription = queue.description;
     this.currentTicket = queue.currentTicket;
     this.estimatedTime = toHHMMSS(queue.estimatedTime);

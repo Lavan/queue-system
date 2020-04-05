@@ -24,3 +24,10 @@
     <span class="queue-length">{{queueLength}}</span>
   </mat-grid-tile>
 </mat-grid-list>
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    Visa kökod
+  </mat-expansion-panel-header>
+  <ngx-kjua [text]="queueUrl" ecLevel="H" size="400" mode="label" mSize="20" mPosX="50"
+            mPosY="50" label="Kö" fontname="sans-serif" fontcolor="green" class="qr-code"></ngx-kjua>
+</mat-expansion-panel>

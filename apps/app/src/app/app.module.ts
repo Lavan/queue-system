@@ -23,6 +23,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiteService } from './services/site.service';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { NgxKjuaModule } from 'ngx-kjua';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [AppComponent, SiteQueueDetailComponent, SiteDetailComponent,
@@ -31,7 +34,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
   imports: [BrowserModule, HttpClientModule, BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     MatToolbarModule, MatIconModule, MatButtonModule, MatCardModule,
-    FlexLayoutModule, MatInputModule, FormsModule, ReactiveFormsModule, MatListModule, MatGridListModule],
+    FlexLayoutModule, MatInputModule, FormsModule, ReactiveFormsModule, MatListModule, MatGridListModule,
+    ZXingScannerModule, NgxKjuaModule, MatExpansionModule],
   providers: [SiteService],
   bootstrap: [AppComponent]
 })

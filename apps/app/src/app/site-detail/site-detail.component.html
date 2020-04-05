@@ -6,19 +6,34 @@
   </button>
 </mat-toolbar>
 
-<div fxLayout="column">
-  <mat-form-field appearance="fill">
-    <mat-label>Beskrivning av kö</mat-label>
-    <input matInput #description type="text" [(ngModel)]="queueDescription">
-  </mat-form-field>
-  <button mat-flat-button color="primary"
-          [disabled]="!description.value"
-          (click)="createQueue()">
-    Skapa Kö
-  </button>
-</div>
-<h2>Aktiva köer</h2>
 <mat-nav-list>
+  <h2 matSubheader>Aktiva köer</h2>
   <a *ngFor="let queue of queues" mat-list-item
      [routerLink]="['/site', siteInfo?.id, queue?.id]">{{queue?.description}}</a>
 </mat-nav-list>
+
+<p></p>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    Skapa ny kö
+  </mat-expansion-panel-header>
+  <div fxLayout="column">
+    <mat-form-field appearance="fill">
+      <mat-label>Beskrivning av kö</mat-label>
+      <input matInput #description type="text" [(ngModel)]="queueDescription">
+    </mat-form-field>
+    <button mat-flat-button color="primary"
+            [disabled]="!description.value"
+            (click)="createQueue()">
+      Skapa
+    </button>
+  </div>
+</mat-expansion-panel>
+<p></p>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    Visa butikens administratörskod
+  </mat-expansion-panel-header>
+  <ngx-kjua [text]="siteUrl" ecLevel="H" size="400" mode="label" mSize="20" mPosX="50"
+            mPosY="50" label="Secret" fontname="sans-serif" fontcolor="red" class="qr-code"></ngx-kjua>
+</mat-expansion-panel>

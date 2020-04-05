@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SiteService } from '../services/site.service';
 import { QueueInfo } from '@queue-system/api-interfaces';
 import { toHHMMSS } from '../utilities';
@@ -16,6 +16,7 @@ export class QueueDetailComponent implements OnInit, OnDestroy {
   private updateIntervalHandle: number;
 
   constructor(private readonly route: ActivatedRoute,
+              private readonly router: Router,
               private readonly siteService: SiteService) {
     route.paramMap.subscribe(params => {
       const queueId = params.get('queueId');
@@ -53,7 +54,7 @@ export class QueueDetailComponent implements OnInit, OnDestroy {
 
   enter() {
     this.siteService.enterQueue(this.queueId)
-      .subscribe(ticket => console.log(ticket));
+      .subscribe(ticket => this.router.navigate(['/queue', this.queueId, ticket.id]));
   }
 }
 

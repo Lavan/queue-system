@@ -14,10 +14,12 @@ export class SiteDetailComponent implements OnInit, OnDestroy {
   siteInfo: SiteInfo;
   queueDescription: string;
   private paramSubscription: Subscription;
+  siteUrl: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private readonly siteService: SiteService) {
+    this.siteUrl = location.href;
     this.paramSubscription = route.paramMap.subscribe(params => {
       const siteId = params.get('siteId');
       this.updateSite(siteId);

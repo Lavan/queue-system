@@ -1,12 +1,14 @@
 <div fxLayout="column" fxLayoutAlign="space-between center">
-<img class="logo"
-    src="/assets/sb-logotype.svg"
-/>
+  <img class="logo"
+       src="/assets/sb-logotype.svg"/>
 
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>Din plats i kön</mat-card-title>
-    </mat-card-header>
-    <div class="queue-position">97</div>
-</mat-card>
+  <mat-card style="text-align: center">
+    <mat-card-title>Din plats i kön</mat-card-title>
+    <mat-card-content>
+      <div class="queue-position">{{ticketNumber}}</div>
+    </mat-card-content>
+    <mat-card-footer>
+    <h2>Väntetid: {{estimatedTime}}</h2>
+    </mat-card-footer>
+  </mat-card>
 </div>
