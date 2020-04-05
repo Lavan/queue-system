@@ -83,10 +83,9 @@ We firmly believe the project to be realisable within the set timeframe of two m
 
 # Tech description
 Developed as a web applikation using modern technologies: 
-- Node.js
-- Angular
-
-
+- Node.js using the NestJS server framework 
+- Angular 9.1
+- Typescript
 
 # Github repo
 https://github.com/Lavan/queue-system
