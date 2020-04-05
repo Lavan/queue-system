@@ -1,1 +1,8 @@
-<p>queue-detail works!</p>
+<div fxLayout="column" fxLayoutAlign="space-between center">
+  <img class="logo" src="/assets/sb-logotype.svg"/>
+  <div class="welcome">Välkommen!</div>
+  <div class="description">{{description}}</div>
+  <button class="enter-queue" mat-raised-button color="warn" (click)="enter()">Ställ dig i kö</button>
+  <div><span class="queue-headline">Uppskattad kötid just nu:</span><span class="queue-eta"> {{estimatedTime}}</span></div>
+
+</div>

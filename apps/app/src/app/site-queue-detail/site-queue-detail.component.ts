@@ -42,7 +42,7 @@ export class SiteQueueDetailComponent implements OnInit, OnDestroy {
     this.siteService.getQueue(this.siteInfo.id, this.queueId).subscribe(queue => this.setQueue(queue));
   }
 
-  advance() {
+  advanceQueue() {
     this.siteService.advanceQueue(this.siteInfo.id, this.queueId).subscribe(queue => this.setQueue(queue));
   }
 

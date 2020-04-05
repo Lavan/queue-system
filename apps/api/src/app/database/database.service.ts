@@ -81,6 +81,7 @@ const advanceQueue = (queue: Queue) => {
   // remove from queue
   const removed_ticket = queue.tickets.shift();
   console.log('removed : ' + removed_ticket.id);
+  delete tickets[removed_ticket.id];
 
   // remove from ticket list
   delete tickets[removed_ticket.id];
@@ -259,6 +260,25 @@ export class DatabaseService {
       id: ticketId,
       ticketNumber: ticket.nr
     };
+  }
+
+  /**
+   * Remove an existing ticket in a specified queue.
+   *
+   * @param queueId
+   * @param ticketId
+   */
+  async removeTicket(queueId: string, ticketId: string) {
+    const queue: Queue = queues[queueId];
+    if (!queue) {
+      throw new NotFoundException();
+    }
+    const ticketIndex = queue.tickets.findIndex(ticket => ticket.id === ticketId);
+    if (ticketIndex >= 0) {
+      queue.tickets.splice(ticketIndex, 1);
+      console.log('removed : ' + ticketId);
+      delete tickets[ticketId];
+    }
   }
 
   /**

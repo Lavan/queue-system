@@ -1,0 +1,37 @@
+@import '~@angular/material/theming';
+
+.logo {
+  height: 128px;
+}
+
+.welcome {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  font-size: 26px;
+}
+
+.description {
+  margin-top: 24px;
+  margin-bottom: 32px;
+  font-size: 20px;
+}
+
+.queue-headline {
+  font-size: 16px;
+  color: #606060;
+  text-transform: uppercase;
+
+}
+
+.queue-eta {
+  font-size: 32px;
+}
+
+.enter-queue {
+  text-transform: uppercase;
+  width: 250px;
+  height: 80px;
+  font-size: 26px;
+
+  margin-bottom: 64px;
+}
